@@ -1,0 +1,10 @@
+{
+  "name": "quote_serving_backend",
+  "version": "1.0.0",
+  "description": "A simple backend service with authentication",
+  "main": "server.js",
+  "dependencies": {
+    "express": "4.18.3",
+    "body-parser": "1.20.2"
+  }
+}
