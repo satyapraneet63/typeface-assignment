@@ -15,9 +15,10 @@ spec:
     spec:
       containers:
         - name: development
-          image: quote_server
+          image: quote_server:1.01
+          imagePullPolicy: Never
           ports:
             - containerPort: 3000
           env:
             - name: API_KEY
-              value: 12345
+              value: "12345"
