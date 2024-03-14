@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quote_server
+  template:
+    metadata:
+      labels:
+        app: quote_server
+    spec:
+      containers:
+      - name: development
+        image: quote_server
+        ports:
+          - containerPort: 3000
+        env:
+          - name: API_KEY
+            value: 12345
