@@ -6,7 +6,8 @@ metadata:
 spec:
   selector:
     app: quote_server
-    port:
-      - protocol: TCP
-        port: 80
-        targetPort: 3000
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer
