@@ -60,5 +60,6 @@ jobs:
       - name: Running Dock/Kube directly
         run: |
           docker build -t quote_server:$TAG_VERSION .
+          docker images | head -4
           kubectl apply -f Kubernetes/deployment.yaml
           kubectl apply -f Kubernetes/service.yaml
