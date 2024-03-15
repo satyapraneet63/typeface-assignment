@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: quote-server
-          image: quote_server
+          image: quote_server:latest
           imagePullPolicy: Never
           ports:
             - containerPort: 3000

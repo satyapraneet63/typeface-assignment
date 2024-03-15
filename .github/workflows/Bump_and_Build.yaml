@@ -35,7 +35,7 @@ jobs:
         run: |
           echo "The next tag version will be: ${{ steps.taggerDryRun.outputs.new_tag }}"
           echo "TAG_VERSION=${{ steps.taggerDryRun.outputs.new_tag }}" >> "$GITHUB_ENV"
-          echo "validating TAG_VERSION:$TAG_VERSION"
+          echo "validating TAG_VERSION: $TAG_VERSION"
 
       - name: echo tag
         run: |
@@ -61,5 +61,8 @@ jobs:
         run: |
           docker build -t quote_server:$TAG_VERSION .
           docker images | head -4
+          sed -i 's/image: quote_server:latest/image: quote_server:$TAG_VERSION/g' Kubernetes/deployment.yaml
           kubectl apply -f Kubernetes/deployment.yaml
           kubectl apply -f Kubernetes/service.yaml
+          kubectl get pods
+          kubectl get services
