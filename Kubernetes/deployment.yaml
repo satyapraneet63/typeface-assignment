@@ -21,6 +21,6 @@ spec:
             - containerPort: 3000
           env:
             - name: API_KEY
-              value: "12345"
+              value: api_key
             - name: TAG_VERSION
               value: tag
