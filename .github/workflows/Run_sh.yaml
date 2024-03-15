@@ -1,0 +1,23 @@
+---
+name: Bump version
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+      - release_*
+concurrency: production
+jobs:
+  Run_Script:
+    if: github.event.pull_request.merged == true
+    runs-on: self-hosted
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Running the run.sh script
+        run: |
+          chmod +x run.sh
+          run.sh
+        shell: bash
