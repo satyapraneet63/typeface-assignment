@@ -14,10 +14,12 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.merge_commit_sha }}
-          fetch-depth: "0"
+          #ref: ${{ github.event.pull_request.merge_commit_sha }}
+          ref: ${{ github.ref_name }}
+          #fetch-depth: "0"
+
       - name: Github Tag Bump
         id: taggerDryRun
         uses: anothrNick/github-tag-action@1.67.0
@@ -26,18 +28,25 @@ jobs:
           WITH_V: true
           PRERELEASE: false
           DRY_RUN: true
+          RELEASE_BRANCHES: release_*
+          DEFAULT_BUMP: patch
+          INITIAL_VERSION: 1.0.0
+
       - name: echo new tag
         run: |
           echo "The next tag version will be: ${{ steps.taggerDryRun.outputs.new_tag }}"
           echo "${{ steps.taggerDryRun.outputs.new_tag }}" > tag.txt
           tag=$(cat tag.txt)
           echo "The tag from the file is: $tag"
+
       - name: echo tag
         run: |
           echo "The current tag is: ${{ steps.taggerDryRun.outputs.tag }}"
+
       - name: echo part
         run: |
           echo "The version increment was: ${{ steps.taggerDryRun.outputs.part }}"
+
       - name: Minor version update for each merge
         id: taggerFinal
         uses: anothrNick/github-tag-action@1.67.0
@@ -46,7 +55,11 @@ jobs:
           WITH_V: true
           PRERELEASE: false
           DRY_RUN: false
+          RELEASE_BRANCHES: release_*
+          DEFAULT_BUMP: patch
+          INITIAL_VERSION: 1.0.0
+
       - name: Docker build and Kubernetes Apply
         id: DockKube
         run: |
-          bash run.sh
+          run.sh
