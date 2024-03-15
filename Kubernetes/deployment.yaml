@@ -15,10 +15,12 @@ spec:
     spec:
       containers:
         - name: quote-server
-          image: quote_server:latest
+          image: quote_server:tag
           imagePullPolicy: Never
           ports:
             - containerPort: 3000
           env:
             - name: API_KEY
               value: "12345"
+            - name: TAG_VERSION
+              value: tag
