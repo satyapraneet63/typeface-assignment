@@ -14,7 +14,7 @@ spec:
         app: quote_server
     spec:
       containers:
-        - name: quote_server
+        - name: quote-server
           image: quote_server
           imagePullPolicy: Never
           ports:
