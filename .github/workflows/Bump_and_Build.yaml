@@ -35,7 +35,6 @@ jobs:
         run: |
           echo "The next tag version will be: ${{ steps.taggerDryRun.outputs.new_tag }}"
           echo "TAG_VERSION=${{ steps.taggerDryRun.outputs.new_tag }}" >> "$GITHUB_ENV"
-          echo "validating TAG_VERSION: $TAG_VERSION"
 
       - name: echo tag
         run: |
