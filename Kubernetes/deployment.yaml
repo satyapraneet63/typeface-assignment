@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: development
-          image: quote_server:1.01
+          image: quote_server:2.0
           imagePullPolicy: Never
           ports:
             - containerPort: 3000
