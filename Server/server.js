@@ -35,6 +35,12 @@ app.get('/quote', authenticate, (req, res) => {
     res.json({ quote: randomQuote });
 });
 
+// GET API to serve the version
+app.get('/version', authenticate, (req, res) => {
+    const tagVersion = process.env.TAG_VERSION;
+    res.json({ version: tagVersion });
+});
+
 // Starting the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
