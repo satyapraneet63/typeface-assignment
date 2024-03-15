@@ -14,8 +14,8 @@ spec:
         app: quote_server
     spec:
       containers:
-        - name: quote_server:${{ secrets.API_KEY }}
-          image: quote_server:${{ secrets.API_KEY }}
+        - name: quote_server:$TAG_VERSION
+          image: quote_server:$TAG_VERSION
           imagePullPolicy: Never
           ports:
             - containerPort: 3000
