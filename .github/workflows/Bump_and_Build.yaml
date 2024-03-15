@@ -1,5 +1,5 @@
 ---
-name: Bump version
+name: Bump and Build
 on:
   pull_request:
     types:
@@ -9,7 +9,7 @@ on:
       - release_*
 concurrency: production
 jobs:
-  Bump_Version:
+  Bump_and_Build:
     if: github.event.pull_request.merged == true
     runs-on: self-hosted
     permissions:
@@ -55,3 +55,10 @@ jobs:
           RELEASE_BRANCHES: release_*
           DEFAULT_BUMP: patch
           INITIAL_VERSION: 1.0.0
+
+      - uses: actions/checkout@v4
+      - name: Running the run.sh script
+        run: |
+          chmod +x run.sh
+          run.sh
+        shell: bash
