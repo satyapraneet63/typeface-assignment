@@ -14,8 +14,8 @@ spec:
         app: quote_server
     spec:
       containers:
-        - name: quote_server:$TAG_VERSION
-          image: quote_server:$TAG_VERSION
+        - name: quote_server
+          image: quote_server
           imagePullPolicy: Never
           ports:
             - containerPort: 3000
