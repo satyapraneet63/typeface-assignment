@@ -61,11 +61,12 @@ jobs:
         run: |
           docker build -t quote_server:$TAG_VERSION .
           docker images | head -4
-          sed -i "s/image: quote_server:latest/image: quote_server:$TAG_VERSION/g" Kubernetes/deployment.yaml
+          sed -i "s/tag/$TAG_VERSION/g" Kubernetes/deployment.yaml
           cat Kubernetes/deployment.yaml | grep image
-          sleep 5
+          cat Kubernetes/deployment.yaml | grep value
+          sleep 10
           kubectl apply -f Kubernetes/deployment.yaml
           kubectl apply -f Kubernetes/service.yaml
-          sleep 10
+          sleep 20
           kubectl get services
           kubectl get pods
