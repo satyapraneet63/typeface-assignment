@@ -1,0 +1,59 @@
+Index: .github/workflows/actions.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>name: Bump version\non:\n  pull_request:\n    types:\n      - closed\n    branches:\n      - main\n\njobs:\n  build:\n    if: github.event.pull_request.merged == true\n    runs-on: self-hosted\n    permissions:\n      contents: write\n    steps:\n      - uses: actions/checkout@v3\n        with:\n          ref: ${{ github.event.pull_request.merge_commit_sha }}\n          fetch-depth: '0'\n      - name: Github Tag Bump\n        uses: anothrNick/github-tag-action@1.67.0\n        env:\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\n          WITH_V: true\n          PRERELEASE: true\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.github/workflows/actions.yaml b/.github/workflows/actions.yaml
+--- a/.github/workflows/actions.yaml	(revision ed5c32fa837e502f3634c5ece613420356f5b893)
++++ b/.github/workflows/actions.yaml	(date 1710510725669)
+@@ -1,3 +1,4 @@
++---
+ name: Bump version
+ on:
+   pull_request:
+@@ -5,7 +6,7 @@
+       - closed
+     branches:
+       - main
+-
++concurrency: production
+ jobs:
+   build:
+     if: github.event.pull_request.merged == true
+@@ -16,10 +17,32 @@
+       - uses: actions/checkout@v3
+         with:
+           ref: ${{ github.event.pull_request.merge_commit_sha }}
+-          fetch-depth: '0'
++          fetch-depth: "0"
+       - name: Github Tag Bump
++        id: taggerDryRun
++        uses: anothrNick/github-tag-action@1.67.0
++        env:
++          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
++          WITH_V: true
++          PRERELEASE: false
++          DRY_RUN: true
++      - name: echo new tag
++        run: |
++          echo "The next tag version will be: ${{ steps.taggerDryRun.outputs.new_tag }}"
++      - name: echo tag
++        run: |
++          echo "The current tag is: ${{ steps.taggerDryRun.outputs.tag }}"
++      - name: echo part
++        run: |
++          echo "The version increment was: ${{ steps.taggerDryRun.outputs.part }}"
++          echo "${{ steps.taggerDryRun.outputs.part }}" > tag.txt
++          tag=$(cat tag.txt)
++          echo "The tag from the file is: $tag"
++      - name: Minor version for each merge
++        id: taggerFinal
+         uses: anothrNick/github-tag-action@1.67.0
+         env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           WITH_V: true
+-          PRERELEASE: true
++          PRERELEASE: false
++          DRY_RUN: false

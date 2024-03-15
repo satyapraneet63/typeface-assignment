@@ -1,0 +1,39 @@
+Index: .github/workflows/actions.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>name: Bump version\non:\n  pull_request:\n    types:\n      - closed\n    branches:\n      - main\n\njobs:\n  build:\n    if: github.event.pull_request.merged == true\n    runs-on: self-hosted\n    permissions:\n      contents: write\n    steps:\n      - uses: actions/checkout@v3\n        with:\n          ref: ${{ github.event.pull_request.merge_commit_sha }}\n          fetch-depth: '0'\n\n      - name: Bump version and push tag\n        uses: anothrNick/github-tag-action@1.64.0 # Don't use @master or @v1 unless you're happy to test the latest version\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.github/workflows/actions.yaml b/.github/workflows/actions.yaml
+--- a/.github/workflows/actions.yaml	(revision d0acaf36c96f1d948b0b6daa96deab62e3a47237)
++++ b/.github/workflows/actions.yaml	(date 1710468785833)
+@@ -1,15 +1,16 @@
++# example 2: on merge to master from pull request (recommended)
+ name: Bump version
+ on:
+   pull_request:
+     types:
+       - closed
+     branches:
+-      - main
++      - master
+ 
+ jobs:
+   build:
+     if: github.event.pull_request.merged == true
+-    runs-on: self-hosted
++    runs-on: ubuntu-22.04
+     permissions:
+       contents: write
+     steps:
+@@ -19,4 +20,8 @@
+           fetch-depth: '0'
+ 
+       - name: Bump version and push tag
+-        uses: anothrNick/github-tag-action@1.64.0 # Don't use @master or @v1 unless you're happy to test the latest version
++        uses: anothrNick/github-tag-action@1.64.0
++        env:
++          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
++          WITH_V: true
++          PRERELEASE: true
