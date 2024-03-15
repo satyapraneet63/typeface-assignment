@@ -38,7 +38,7 @@ jobs:
       - name: echo part
         run: |
           echo "The version increment was: ${{ steps.taggerDryRun.outputs.part }}"
-      - name: Minor version for each merge
+      - name: Minor version update for each merge
         id: taggerFinal
         uses: anothrNick/github-tag-action@1.67.0
         env:
@@ -46,3 +46,7 @@ jobs:
           WITH_V: true
           PRERELEASE: false
           DRY_RUN: false
+      - name: Docker build and Kubernetes Apply
+        id: DockKube
+        run: |
+          bash run.sh
