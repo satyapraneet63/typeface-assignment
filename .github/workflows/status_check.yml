@@ -11,17 +11,19 @@ jobs:
     runs-on: self-hosted
     permissions:
       contents: read
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 #GitHub actions default checkout
+        uses: actions/checkout@v4
 
-      - name: Check git diff #checks which files have been changed in current commit
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v43 #https://github.com/marketplace/actions/changed-files
+
+      - name: List all changed files
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
-          HEAD=${{ github.ref_name }}
-          BASE=${{ github.event.pull_request.base.ref }}
-          echo "Pull Request Base Ref: $BASE"
-          echo "Pull Request Head Ref: $HEAD"
-          HASH=$(git merge-base ${HEAD} ${BASE})
-          echo "Hash: $HASH"
-          CHANGES=$(git diff --name-only --diff-filter=A ${HASH} ${HEAD})
-          echo $CHANGES
+          for file in ${ALL_CHANGED_FILES}; do
+          echo "$file was changed"
+          done
