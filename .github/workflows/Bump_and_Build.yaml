@@ -1,17 +1,17 @@
 ---
-name: Bump and Build
+name: Bump and Build Dev
 on:
   pull_request:
     types:
-      - closed
+      - closed  #Should this be closed or removed? Do I want to build only when merged?
     branches:
       - main
-      - release_*
 concurrency: production
 jobs:
-  Bump_and_Build:
+  Bump_and_Build_Dev:
     if: github.event.pull_request.merged == true
     runs-on: self-hosted
+    environment: development
     permissions:
       contents: write
     steps:
@@ -51,6 +51,79 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
           PRERELEASE: false
+          DRY_RUN: false
+          RELEASE_BRANCHES: release_*
+          DEFAULT_BUMP: patch
+          INITIAL_VERSION: 1.0.0
+
+      - name: Running Dock/Kube directly
+        run: |
+          docker build -t quote_server:$TAG_VERSION .
+          sed -i "s/tag/$TAG_VERSION/g" Kubernetes/deployment.yaml
+          sed -i "s/api_key/${{ secrets.API_KEY }}/g" Kubernetes/deployment.yaml
+          cat Kubernetes/deployment.yaml | grep value
+          kubectl apply -f Kubernetes/deployment.yaml
+          kubectl apply -f Kubernetes/service.yaml
+
+---
+
+name: Bump and Build Prod
+on:
+  push:
+    branches:
+      - releasebranch
+  pull_request:
+    types:
+      - closed
+    branches:
+      - release_*
+concurrency: production
+jobs:
+  Bump_and_Build_Prod:
+    if: github.event.pull_request.merged == true && github.ref == 'refs/heads/releasebranch' && github.base_ref =~ '^refs/heads/release_.*$'
+    runs-on: self-hosted
+    environment: production
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Github Tag Bump
+        id: taggerDryRun
+        uses: anothrNick/github-tag-action@1.67.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          PRERELEASE: true
+          PRERELEASE_SUFFIX: release
+          DRY_RUN: true
+          RELEASE_BRANCHES: release_*
+          DEFAULT_BUMP: patch
+          INITIAL_VERSION: 1.0.0
+
+      - name: echo new tag
+        run: |
+          echo "The next tag version will be: ${{ steps.taggerDryRun.outputs.new_tag }}"
+          echo "TAG_VERSION=${{ steps.taggerDryRun.outputs.new_tag }}" >> "$GITHUB_ENV"
+
+      - name: echo tag
+        run: |
+          echo "The current tag is: ${{ steps.taggerDryRun.outputs.tag }}"
+
+      - name: echo part
+        run: |
+          echo "The version increment was: ${{ steps.taggerDryRun.outputs.part }}"
+
+      - name: Minor version update for each merge
+        id: taggerFinal
+        uses: anothrNick/github-tag-action@1.67.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          PRERELEASE: true
+          PRERELEASE_SUFFIX: release
           DRY_RUN: false
           RELEASE_BRANCHES: release_*
           DEFAULT_BUMP: patch
