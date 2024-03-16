@@ -80,7 +80,8 @@ on:
 concurrency: production
 jobs:
   Bump_and_Build_Prod:
-    if: github.event.pull_request.merged == true && github.ref == 'refs/heads/releasebranch' && github.base_ref =~ '^refs/heads/release_.*$'
+    if: github.event.pull_request.merged == true && github.ref ==
+      'refs/heads/releasebranch' && github.base_ref =~ '^refs/heads/release_.*$'
     runs-on: self-hosted
     environment: production
     permissions:
