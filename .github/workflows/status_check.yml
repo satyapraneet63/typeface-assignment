@@ -9,6 +9,8 @@ on:
 jobs:
   status_check:
     runs-on: self-hosted
+    permissions:
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4 #GitHub actions default checkout
