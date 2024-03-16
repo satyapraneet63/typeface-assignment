@@ -5,12 +5,12 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLabels:
+    matchLabels: #Label selector and environment are very important
       app: quote_server_dev
       environment: development
   template:
     metadata:
-      labels:
+      labels: #Label selector and environment are very important
         app: quote_server_dev
         environment: development
     spec:
@@ -22,6 +22,6 @@ spec:
             - containerPort: 3000
           env:
             - name: API_KEY
-              value: api_key
+              value: api_key #This will be replaced with API_KEY of the corresponding environment
             - name: TAG_VERSION
-              value: tag
+              value: tag #This is dynamically updated for every job
