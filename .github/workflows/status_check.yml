@@ -17,10 +17,10 @@ jobs:
 
       - name: Check git diff #checks which files have been changed in current commit
         run: |
-          HEAD=${{ github.event.pull_request.head.ref }}
+          HEAD=${{ github.ref_name }}
           BASE=${{ github.event.pull_request.base.ref }}
-          echo "Pull Request Base Ref: ${{ github.event.pull_request.base.ref }}"
-          echo "Pull Request Head Ref: ${{ github.event.pull_request.head.ref }}"
+          echo "Pull Request Base Ref: $BASE"
+          echo "Pull Request Head Ref: $HEAD"
           HASH=$(git merge-base ${HEAD} ${BASE})
           echo "Hash: $HASH"
           CHANGES=$(git diff --name-only --diff-filter=A ${HASH} ${HEAD})
