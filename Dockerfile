@@ -1,14 +1,6 @@
 FROM node:20-alpine
 WORKDIR /usr/src/app
-
-COPY package.json .
-COPY Server/quotes.json .
-COPY Server/server.js .
-COPY Dockerfile .
-COPY Kubernetes/deployment.yaml .
-COPY Kubernetes/service.yaml .
-
 RUN npm install express body-parser
-
+COPY . .
 EXPOSE 3000
 CMD ["node", "server.js"]

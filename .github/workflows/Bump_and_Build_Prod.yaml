@@ -66,8 +66,8 @@ jobs:
       - name: Running Dock/Kube directly
         run: |
           docker build -t quote_server:$TAG_VERSION .
-          sed -i "s/tag/$TAG_VERSION/g" Kubernetes/deployment.yaml
-          sed -i "s/api_key/${{ secrets.API_KEY }}/g" Kubernetes/deployment.yaml
-          cat Kubernetes/deployment.yaml | grep value
-          kubectl apply -f Kubernetes/deployment.yaml
-          kubectl apply -f Kubernetes/service.yaml
+          sed -i "s/tag/$TAG_VERSION/g" Kubernetes/deployment_prod.yaml
+          sed -i "s/api_key/${{ secrets.API_KEY }}/g" Kubernetes/deployment_prod.yaml
+          cat Kubernetes/deployment_prod.yaml | grep value
+          kubectl apply -f Kubernetes/deployment_prod.yaml
+          kubectl apply -f Kubernetes/service_prod.yaml
