@@ -20,5 +20,6 @@ jobs:
           echo "Pull Request Base Ref: ${{ github.event.pull_request.base.ref }}"
           echo "Pull Request Head Ref: ${{ github.event.pull_request.head.ref }}"
           HASH=$(git merge-base ${HEAD} ${BASE})
+          echo "Hash: $HASH"
           CHANGES=$(git diff --name-only --diff-filter=A ${HASH} ${HEAD})
           echo $CHANGES
