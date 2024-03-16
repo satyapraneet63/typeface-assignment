@@ -1,9 +1,52 @@
 [
-  "Why don't scientists trust atoms? Because they make up everything!",
-  "Parallel lines have so much in common. It’s a shame they’ll never meet.",
-  "What's orange and sounds like a parrot? A carrot!",
-  "I'm on a whiskey diet. I've lost three days already.",
-  "Why don't skeletons fight each other? They don't have the guts.",
-  "I'm reading a book on anti-gravity. It's impossible to put down.",
-  "Why don't skeletons fight each other? They don't have the guts."
+  {
+    "author": "Brandon Sanderson",
+    "quote": "The most important words a man can say are, 'I will do better.' These are not the most important words any man can say. I am a man, and they are what I needed to say.",
+    "source": "Oathbringer"
+  },
+  {
+    "author": "Brandon Sanderson",
+    "quote": "Expectation was like a warm bed you could never quite leave behind.",
+    "source": "The Way of Kings"
+  },
+  {
+    "author": "Brandon Sanderson",
+    "quote": "Sometimes a hypocrite is nothing more than a man in the process of changing.",
+    "source": "Words of Radiance"
+  },
+  {
+    "author": "Brandon Sanderson",
+    "quote": "Life before death. Strength before weakness. Journey before destination.",
+    "source": "The Way of Kings"
+  },
+  {
+    "author": "Brandon Sanderson",
+    "quote": "The purpose of a storyteller is not to tell you how to think, but to give you questions to think upon.",
+    "source": "Words of Radiance"
+  },
+  {
+    "author": "Robert Jordan",
+    "quote": "The Wheel of Time turns, and Ages come and pass, leaving memories that become legend. Legend fades to myth, and even myth is long forgotten when the Age that gave it birth comes again.",
+    "source": "The Eye of the World"
+  },
+  {
+    "author": "Robert Jordan",
+    "quote": "Death is lighter than a feather, duty heavier than a mountain.",
+    "source": "The Great Hunt"
+  },
+  {
+    "author": "Robert Jordan",
+    "quote": "There are no endings, and never will be endings, to the turning of the Wheel of Time.",
+    "source": "A Memory of Light"
+  },
+  {
+    "author": "Robert Jordan",
+    "quote": "The rose petal floats on water. The kingfisher flashes above the pond. Life and beauty swirl in the midst of death.",
+    "source": "The Fires of Heaven"
+  },
+  {
+    "author": "Robert Jordan",
+    "quote": "The oak fought the wind and was broken, the willow bent when it must and survived.",
+    "source": "The Fires of Heaven"
+  }
 ]
