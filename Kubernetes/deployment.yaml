@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-deployment_dev
+  name: app-deployment-dev
 spec:
   replicas: 1
   selector:
@@ -32,7 +32,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-deployment_prod
+  name: app-deployment-prod
 spec:
   replicas: 1
   selector:
