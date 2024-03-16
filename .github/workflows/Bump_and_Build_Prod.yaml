@@ -14,7 +14,7 @@ jobs:
     if: >
       github.event.pull_request.merged == true &&
       github.ref == 'refs/heads/releasebranch' &&
-      github.base_ref =~ '^refs/heads/release_.*$'
+      startsWith(github.base_ref, 'refs/heads/release_')
     runs-on: self-hosted
     environment: production
     permissions:
