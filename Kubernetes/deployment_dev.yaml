@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quote_server_dev
+      environment: development
+  template:
+    metadata:
+      labels:
+        app: quote_server_dev
+        environment: development
+    spec:
+      containers:
+        - name: quote-server
+          image: quote_server:tag
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+          env:
+            - name: API_KEY
+              value: api_key
+            - name: TAG_VERSION
+              value: tag
