@@ -1,30 +1,35 @@
 name: Bump and Build Prod
+
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - releasebranch
-  pull_request:
-    types:
-      - closed
-    branches:
-      - release_*
+
 concurrency: production
+
 jobs:
   Bump_and_Build_Prod:
-    if: >
-      github.event.pull_request.merged == true &&
-      github.ref == 'refs/heads/releasebranch' &&
-      github.base_ref =~ '^refs/heads/release_.*$'
+    if: github.event.pull_request.merged == true
     runs-on: self-hosted
     environment: production
     permissions:
       contents: write
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Debug Logging
+        run: |
+          echo "Base Ref: ${{ github.base_ref }}"
+          echo "Pull Request Base Ref: ${{ github.event.pull_request.base.ref }}"
+          echo "Pull Request Head Ref: ${{ github.event.pull_request.head.ref }}"
+          echo "Pull Request Merged: ${{ github.event.pull_request.merged }}"
+
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.ref_name }}
 
-      - name: Github Tag Bump
+      - name: Github Tag Bump Dry Run
         id: taggerDryRun
         uses: anothrNick/github-tag-action@1.67.0
         env:
@@ -37,16 +42,16 @@ jobs:
           DEFAULT_BUMP: patch
           INITIAL_VERSION: 1.0.0
 
-      - name: echo new tag
+      - name: Echo new tag
         run: |
           echo "The next tag version will be: ${{ steps.taggerDryRun.outputs.new_tag }}"
           echo "TAG_VERSION=${{ steps.taggerDryRun.outputs.new_tag }}" >> "$GITHUB_ENV"
 
-      - name: echo tag
+      - name: Echo tag
         run: |
           echo "The current tag is: ${{ steps.taggerDryRun.outputs.tag }}"
 
-      - name: echo part
+      - name: Echo part
         run: |
           echo "The version increment was: ${{ steps.taggerDryRun.outputs.part }}"
 
