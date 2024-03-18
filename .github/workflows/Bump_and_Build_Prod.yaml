@@ -10,7 +10,8 @@ concurrency: production #only one instance of this workflow can run at a time
 
 jobs:
   Bump_and_Build_Prod:
-    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release_') #job is run only on merge from a branch of the pattern release_*
+    if: github.event.pull_request.merged == true && (startsWith(github.event.pull_request.head.ref, 'release_') || startsWith(github.event.pull_request.head.ref, 'hotfix_'))
+    #job is run only on merge from a branch of the pattern release_* or hotfix_*
     runs-on: self-hosted
     environment: production #sets the environment for the job for GitHub
     permissions:
