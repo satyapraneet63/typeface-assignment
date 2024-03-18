@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: app-service-prod
 spec:
-  selector:
+  selector: #Label selector and environment are very important
     app: quote_server_prod
     environment: production
   ports:
