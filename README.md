@@ -31,7 +31,7 @@
 - main is designated as the development branch and any branch can be merged to it, triggering a deployment to the "development" environment.
 - releasebranch is the designated production branch. Only merges from branches with the prefix `release_*` or `hotfix_*` trigger deployments to the "production" environment.
 - Before any merge a `status_check` is to be run successfully. This lists out the files which were added/changed before commit.
-  - The application sends back valid responses on requests to /quote and /version only. Be sure to pass the API_KEY of the respective environment as a header in the request.
+  - The application sends back valid responses on requests to `/quote`, `/version` and `/hash` only. Be sure to pass the API_KEY of the respective environment as a header in the request.
 - It is recommended to utilize the project [typeface-assignment](https://github.com/users/satyapraneet63/projects/2) to track your commits along with your task/feature as a commit message for project management.
 - The recommended naming convention of the branches is `<developer>/<ticket>/<branch_name>` for clarity.
 
