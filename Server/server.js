@@ -42,6 +42,13 @@ app.get('/version', authenticate, (req, res) => {
     res.json({ version: tagVersion });
 });
 
+// GET API to serve the hashes for debugging
+app.get('/hash', authenticate, (req, res) => {
+    const gitSHA = process.env.GITHUB_SHA;
+    const shortSHA = process.env.shortSHA;
+    res.json({ "Full commit SHA": gitSHA, "Shortened Hash": shortSHA });
+});
+
 // Starting the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

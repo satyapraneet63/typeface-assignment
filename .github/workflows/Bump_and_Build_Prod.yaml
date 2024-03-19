@@ -66,6 +66,9 @@ jobs:
       - name: Running Dock/Kube directly #Tag is dynamically updated for every job. Also, API_KEY is assigned according to the environment securely
         run: |
           docker build -t quote_server:$TAG_VERSION .
+          hash=$(git rev-parse --short "$GITHUB_SHA")
+          sed -i "s/hash/$hash/g" Kubernetes/deployment_prod.yaml
+          sed -i "s/full_sha/$GITHUB_SHA/g" Kubernetes/deployment_prod.yaml
           sed -i "s/tag/$TAG_VERSION/g" Kubernetes/deployment_prod.yaml
           sed -i "s/api_key/${{ secrets.API_KEY }}/g" Kubernetes/deployment_prod.yaml
           cat Kubernetes/deployment_prod.yaml | grep value
