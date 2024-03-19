@@ -26,6 +26,6 @@ spec:
             - name: TAG_VERSION
               value: tag #This is dynamically updated for every job
             - name: GITHUB_SHA
-              value: full_hash #This contains the full commit hash for every commit
+              value: full_sha #This contains the full commit hash for every commit
             - name: shortSHA
               value: hash #This contains the shortened commit hash for every commit
