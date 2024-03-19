@@ -25,3 +25,5 @@ spec:
               value: api_key #This will be replaced with API_KEY of the corresponding environment
             - name: TAG_VERSION
               value: tag #This is dynamically updated for every job
+            - name: shortSHA
+              value: hash #This contains the shortened commit hash for every commit
