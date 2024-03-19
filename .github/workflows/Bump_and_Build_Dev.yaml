@@ -61,7 +61,7 @@ jobs:
         run: |
           docker build -t quote_server:$TAG_VERSION .
           hash=$(git rev-parse --short "$GITHUB_SHA")
-          sed -i "s/value: hash/value: $hash/g" Kubernetes/deployment_dev.yaml
+          sed -i "s/hash/$hash/g" Kubernetes/deployment_dev.yaml
           sed -i "s/full_sha/$GITHUB_SHA/g" Kubernetes/deployment_dev.yaml
           sed -i "s/tag/$TAG_VERSION/g" Kubernetes/deployment_dev.yaml
           sed -i "s/api_key/${{ secrets.API_KEY }}/g" Kubernetes/deployment_dev.yaml
